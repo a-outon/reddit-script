@@ -16,10 +16,10 @@ def downloadImage(imageUrl, localFileName):
                 fo.write(chunk)
 
 def processReddit(x):
-    targetSubreddit = x
+    targetSubreddit = 'streetartporn'
     # Connect to reddit and download the subreddit front page
     r = praw.Reddit(user_agent='Reddit Image Downloader // @halfliquid') # Note: Be sure to change the user-agent to something unique.
-    submissions = r.get_subreddit(targetSubreddit).get_top_from_week(limit=30)
+    submissions = r.get_subreddit(targetSubreddit).get_top_from_all(limit=55)
      
     # Process all the submissions from the front page
     for submission in submissions:
@@ -78,8 +78,21 @@ def processReddit(x):
             downloadImage(imageUrl, localFileName)
 
 #this loop will run 'processReddit()' with the variables set on "myconfig.py"
-for i in range(0,n):
-    print ('##' + '\n' + '>> Processing /r/' + subs[i] + '...')
-    processReddit(subs[i])
-    print ('>> Pictures from /r/' + subs[i] + ' have been downloaded.')
-    i+=1
+def autoMatic():
+    for i in range(0,n):
+        print ('##' + '\n' + '>> Processing /r/' + subs[i] + '...')
+        processReddit(subs[i])
+        print ('>> Pictures from /r/' + subs[i] + ' have been downloaded.')
+        i+=1
+
+#this loop will let you decide what subreddits to download
+def mainMenu():
+    z = 'l'
+    while z != 'x':
+        print ('a = spaceporn' + '\n' + 'b = cityporn' + '\n' + 'c = earthporn' + '\n' + 'd = foodporn' + '\n' + 'e = waterporn' + '\n' + 'f = imaginarylandscapes' + '\n' + 'g = movieposterporn' + '\n' + 'h = artporn' + '\n' + 'i = graffiti' + '\n' + '\n' + '\n' + 'x = exit')
+        x = input()
+        processReddit(x)
+
+#mainMenu()
+#autoMatic()       
+processReddit('comicbookporn')
